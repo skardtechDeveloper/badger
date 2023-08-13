@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 
-export const useAuth = ({ middleware } = {}) => {
+export const useAuth = () => {
     const router = useRouter();
 
     // Loading
     const [isLoading, setIsLoading] = useState(true);
 
     // User
-    const { data: user, error, mutate } = userSWR("/api/v1/user",
+    const { data: user, error, mutate } = useSWR("/api/v1/user",
         () => axios
             .get("/api/v1/user")
             .then(response => response.data.data)
@@ -53,8 +53,8 @@ export const useAuth = ({ middleware } = {}) => {
             setIsLoading(false);
         }
 
-        if (middleware == "guest" && user) router.push("/");
-        if (middleware == "auth" && error) router.push("/login");
+        // if (middleware == "guest" && user) router.push("/");
+        // if (middleware == "auth" && error) router.push("/login");
     })
 
 
